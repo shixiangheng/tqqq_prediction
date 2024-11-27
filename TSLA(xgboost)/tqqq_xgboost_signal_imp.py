@@ -87,15 +87,15 @@ def forecast_for_date(symbol, target_date, target_start_date, target_end_date, m
 if __name__ == "__main__":
     # Get today's date
     today_date = datetime.today().strftime('%Y-%m-%d')
-    target_start_date='2022-11-01'
+    target_start_date='2021-11-01'
     target_end_date=today_date
-    symbol = "TSLA"
-    target_date=today_date#"2024-11-26"
+    symbol = "TQQQ"
+    target_date=today_date #"2024-11-25"
     features = ['SMA_1', 'SMA_2', 'RSI', 'Volatility', 'Daily_Return']
     
     # Load the saved model
     model = xgb.XGBClassifier()  # or use any model class that you used during training
-    model.load_model('xgboost_model_basline.json')  # Load model from the saved file
+    model.load_model('tqqq_xgboost_model_20241125.json')  # Load model from the saved file
     
     # Use the model for predictions
     # Forecast for the given date
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     predictions = model.predict(X)
     
     y_pred_final = np.where(predictions == 0, -1, predictions - 1)
-    print(f"Not accurate around the start date:{target_start_date}")
-    backtest(data, y_pred_final, data.index)
     
+    backtest(data, y_pred_final, data.index)
+    print(f"Not accurate around the start date:{target_start_date}")
     
